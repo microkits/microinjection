@@ -1,0 +1,1 @@
+export { ClassProvider } from "./ClassProvider";

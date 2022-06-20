@@ -1,0 +1,1 @@
+export type RegistrationId = string | symbol;

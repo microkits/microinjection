@@ -1,0 +1,19 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Ignore built ts files
+dist/**/*
+
+# Dependency directory
+node_modules
+
+#Logs 
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage directory
+coverage
+
+# Build directory
+dist
