@@ -1,6 +1,6 @@
 import { Container } from "./core/Container";
 
-export class MicroInjection {
+export class Microinjection {
   private static container: Container;
 
   static getDefaultContainer(): Container {

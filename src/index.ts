@@ -10,4 +10,4 @@ export {
   ValueProvider
 } from "./providers"
 
-export { MicroInjection } from "./MicroInjection";
+export { Microinjection } from "./Microinjection";
