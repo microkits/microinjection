@@ -11,8 +11,11 @@ export class Microinjection {
     return this.container;
   }
 
-  static createContainer(): Container {
-    const container = this.getDefaultContainer();
-    return new Container(container);
+  static createContainer(parent?: Container): Container {
+    if (parent == null) {
+      parent = this.getDefaultContainer();
+    }
+
+    return new Container(parent);
   }
 }
