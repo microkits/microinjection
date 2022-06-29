@@ -8,6 +8,10 @@ export class ValueProvider<T> extends AbstractProvider<T> {
     this._value = value;
   }
 
+  /**
+   * It returns the value stored on provider
+   * @returns The value stored.
+   */
   resolve(): T {
     return this._value
   }

@@ -15,6 +15,12 @@ export class ClassProvider<T> extends AbstractProvider<T> {
     this.dependencies = options?.dependencies;
   }
 
+  /**
+   * It creates an instance of the target class, injects the dependencies into the constructor, and
+   * then injects the properties
+   * @param {ResolutionContext} context - The context of the resolution.
+   * @returns An instance of the target class with all of the dependencies and properties resolved.
+   */
   resolve(context: ResolutionContext): T {
     const params = [];
 
