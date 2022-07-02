@@ -1,4 +1,3 @@
-import { ResolutionContext } from "../core/ResolutionContext";
 import { Scope } from "../types";
 import { Container } from "./Container";
 

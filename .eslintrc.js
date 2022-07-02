@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  ignorePatterns: ["**/*.spec.ts"],
   parser: '@typescript-eslint/parser',
   plugins: [
     '@typescript-eslint',
@@ -8,4 +9,12 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
   ],
+  rules: {
+    "@typescript-eslint/no-empty-interface": [
+      "error",
+      {
+        "allowSingleExtends": true
+      }
+    ]
+  }
 };

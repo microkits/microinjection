@@ -1,12 +1,12 @@
 import { Microinjection } from "../Microinjection";
-import { Scope } from "../types";
+import { Constructor, Scope } from "../types";
 import { MetadataRegistry } from "./metadata/MetadataRegistry";
 
-export function TransientScoped() {
-  return function (target: any) {
+export function TransientScoped<T>(): ClassDecorator {
+  return function (target: NewableFunction) {
     const container = Microinjection.getDefaultContainer();
-    
-    MetadataRegistry.setScope(target, Scope.TRANSIENT);
-    MetadataRegistry.register(target, container);
+
+    MetadataRegistry.setScope(target as unknown as Constructor<T>, Scope.TRANSIENT);
+    MetadataRegistry.register(target as unknown as Constructor<T>, container);
   }
 }

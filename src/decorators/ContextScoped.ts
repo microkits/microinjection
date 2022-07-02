@@ -1,13 +1,12 @@
-
 import { Microinjection } from "../Microinjection";
-import { Scope } from "../types";
+import { Constructor, Scope } from "../types";
 import { MetadataRegistry } from "./metadata/MetadataRegistry";
 
-export function ContextScoped() {
-  return function (target: any) {
+export function ContextScoped<T>(): ClassDecorator {
+  return function (target) {
     const container = Microinjection.getDefaultContainer();
 
-    MetadataRegistry.setScope(target, Scope.CONTEXT);
-    MetadataRegistry.register(target, container);
+    MetadataRegistry.setScope(target as unknown as Constructor<T>, Scope.CONTEXT);
+    MetadataRegistry.register(target as unknown as Constructor<T>, container);
   }
 }
