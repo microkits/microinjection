@@ -10,8 +10,8 @@ import { AlreadyRegisteredError } from "../errors/AlreadyRegisteredError";
 import { NotRegisteredError } from "../errors/NotRegisteredError";
 
 export class Container {
-  private readonly parent?: Container;
-  private readonly registry: Registry;
+  readonly parent?: Container;
+  readonly registry: Registry;
 
   constructor(parent?: Container) {
     this.registry = new Registry();
