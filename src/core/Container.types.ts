@@ -7,8 +7,3 @@ export interface ContainerOptions {
   defaultScope?: Scope;
   defaultStrict?: boolean;
 }
-
-export interface ContainerResolveOptions {
-  context?: ResolutionContext,
-  strict?: boolean;
-}
