@@ -7,7 +7,7 @@ Connecting everything is a tedious part of app development. <b>Microinjection</b
 Microinjection is written entirely in <b>TypeScript</b>, but supports <b>JavaScript</b> as well.
 
 [![npm version](https://badge.fury.io/js/%40microkits%2Fmicroinjection.svg)](https://badge.fury.io/js/%40microkits%2Fmicroinjection)
-
+[![CodeQL](https://github.com/microkits/microinjection/workflows/CodeQL/badge.svg)](https://github.com/microkits/microinjection/actions?query=workflow%3ACodeQL)
 ## Features
 
 - Property Injection
