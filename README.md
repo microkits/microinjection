@@ -36,7 +36,7 @@ yarn add @microkits/microinjection
 
 ## Basic usage
 
-Containers are the main components of Microinjection. The first step to start using Microinjection is to [getting a container](core-concepts/containers.md#getting-a-container).
+Containers are the main components of Microinjection. The first step to start using Microinjection is to getting a container.
 
 ```typescript
 import { Microinjection } from "@microkits/microinjection";
@@ -44,7 +44,7 @@ import { Microinjection } from "@microkits/microinjection";
 const container = Microinjection.getDefaultContainer();
 ```
 
-With an instance of the `Container` in hand, you can add your [Registrations](core-concepts/registrations.md).
+With an instance of the `Container` in hand, you can add your Registrations.
 
 ```typescript
 class Cat {
