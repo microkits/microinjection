@@ -1,4 +1,3 @@
-
 import { Microinjection } from "../Microinjection";
 import { Scope } from "../types";
 import { Injectable } from "./Injectable";

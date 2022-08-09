@@ -1,4 +1,5 @@
 import { Constructor } from "src/types";
+import { InjectDecoratorError } from "../errors/InjectDecoratorError";
 import { MetadataRegistry } from "./metadata/MetadataRegistry";
 
 export function Inject(inject: string);
@@ -20,6 +21,6 @@ export function Inject(inject: string): ParameterDecorator | PropertyDecorator {
       return
     }
 
-    throw new Error("Aí é foda... tu tá usando errado //TODO")
+    throw new InjectDecoratorError();
   }
 }
