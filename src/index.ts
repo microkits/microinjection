@@ -1,4 +1,5 @@
 export {
+  AbstractModule,
   Container,
   ResolutionContext,
 } from "./core";

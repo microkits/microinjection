@@ -1,4 +1,4 @@
-export { Configuration } from "./Configuration";
+export { AbstractModule } from "./AbstractModule";
 export { Container } from "./Container";
 export { Registration } from "./Registration";
 export { Registry } from "./Registry";
