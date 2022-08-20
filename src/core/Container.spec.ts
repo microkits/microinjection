@@ -1,7 +1,6 @@
 import { AlreadyRegisteredError } from "../errors/AlreadyRegisteredError";
 import { NotRegisteredError } from "../errors/NotRegisteredError";
 import { Scope } from "../types";
-import { Configuration } from "./Configuration";
 import { Container } from "./Container";
 
 describe("Container", () => {
@@ -540,24 +539,29 @@ describe("Container", () => {
     expect(child).toBeInstanceOf(Container);
   });
 
-  it("should load configurations", () => {
+  it("should add modules", () => {
     const container = new Container();
 
     // single argument
-    container.load(new Configuration((container) => {
-      container.register("test 1").asValue(1);
-    }));
+    container.addModule({
+      configure(container) {
+        container.register("test 1").asValue(1);
+      }
+    })
 
     // spread arguments
-    container.load(
-      new Configuration((container) => {
-        container.register("test 2").asValue(2);
-      }),
-
-      new Configuration((container) => {
-        container.register("test 3").asValue(3);
-      })
-    );
+    container.addModule(
+      {
+        configure(container) {
+          container.register("test 2").asValue(2);
+        }
+      },
+      {
+        configure(container) {
+          container.register("test 3").asValue(3);
+        }
+      }
+    )
 
     expect(container.resolve("test 1")).toBe(1);
     expect(container.resolve("test 2")).toBe(2);
@@ -570,9 +574,6 @@ describe("Container", () => {
     container.register("test").asValue(5);
 
     const child = container.createChildContainer();
-
-    const value = child.resolve("test");
-
-    expect(value).toBe(5);
+    expect(child.resolve("test")).toBe(5);
   })
 });

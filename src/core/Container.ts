@@ -2,12 +2,12 @@
 import { Scope } from "../types";
 import { Registry } from "./Registry";
 import { Registration } from "./Registration";
-import { Configuration } from "./Configuration";
 import { RegistrationId } from "./Registration.types";
 import { RegistrationBuilder } from "./RegistrationBuilder";
 import { ResolutionContext } from "./ResolutionContext";
 import { AlreadyRegisteredError } from "../errors/AlreadyRegisteredError";
 import { NotRegisteredError } from "../errors/NotRegisteredError";
+import { AbstractModule } from "./AbstractModule";
 
 export class Container {
   readonly parent?: Container;
@@ -87,13 +87,12 @@ export class Container {
   }
 
   /**
-   * It takes an array of configurations, and for each configuration, it calls the handler function
-   * @param configurations - [Configuration, ...Configuration[]]
+   * It takes an array of modules, and for each module, it calls the configure function
+   * @param modules - [AbstractModule, ...AbstractModule[]]
    */
-  load(...configurations: [Configuration, ...Configuration[]]): void {
-    configurations.forEach(configuration => {
-      configuration.handler(this);
-    });
+  addModule(...modules: [AbstractModule, ...AbstractModule[]]): Container {
+    modules.forEach(module => module.configure(this));
+    return this
   }
 
   /**
