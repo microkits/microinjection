@@ -1,14 +1,14 @@
 import { ResolutionContext } from "../../core/ResolutionContext";
-import { Constructor } from "../../types";
+import { ConcreteClass } from "../../types";
 import { AbstractProvider } from "../AbstractProvider";
 import { ClassDependency, ClassProperty, ClassProviderOptions } from "./ClassProvider.types";
 
 export class ClassProvider<T> extends AbstractProvider<T> {
-  private target: Constructor<T>;
+  private target: ConcreteClass<T>;
   private properties?: ClassProperty[];
   private dependencies?: ClassDependency[];
 
-  constructor(target: Constructor<T>, options?: ClassProviderOptions) {
+  constructor(target: ConcreteClass<T>, options?: ClassProviderOptions) {
     super();
     this.target = target;
     this.properties = options?.properties;

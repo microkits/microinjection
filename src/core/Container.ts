@@ -3,11 +3,12 @@ import { Scope } from "../types";
 import { Registry } from "./Registry";
 import { Registration } from "./Registration";
 import { RegistrationId } from "./Registration.types";
-import { RegistrationBuilder } from "./RegistrationBuilder";
 import { ResolutionContext } from "./ResolutionContext";
 import { AlreadyRegisteredError } from "../errors/AlreadyRegisteredError";
 import { NotRegisteredError } from "../errors/NotRegisteredError";
 import { AbstractModule } from "./AbstractModule";
+import { RegistrationBuilder } from "../builder/RegistrationBuilder";
+import { AsSyntax } from "../builder/syntax/AsSyntax";
 
 export class Container {
   readonly parent?: Container;
@@ -40,7 +41,7 @@ export class Container {
    * @param {RegistrationId} id - The id of the registration.
    * @returns A Registration<T>
    */
-  get<T>(id: RegistrationId): Registration<T> {
+  get<T>(id: RegistrationId<T>): Registration<T> {
     if (this.registry.has(id)) {
       return this.registry.get(id);
     }
@@ -76,14 +77,16 @@ export class Container {
    * @param {Scope} [scope] - Scope
    * @returns A RegistrationBuilder<T>
    */
-  register<T>(id: RegistrationId, scope?: Scope): RegistrationBuilder<T> {
+  register<T>(id: RegistrationId<T>, scope?: Scope): AsSyntax<T> {
     if (this.has(id)) {
       throw new AlreadyRegisteredError(id);
     }
 
-    const registration = new Registration<T>(id, scope);
-    this.registry.save(registration);
-    return new RegistrationBuilder<T>(registration);
+    const builder = new RegistrationBuilder<T>(id, scope);
+
+    return builder.start((registration) => {
+      this.registry.save(registration);
+    });
   }
 
   /**
@@ -105,7 +108,7 @@ export class Container {
    * not registered.
    * @returns The resolved value.
    */
-  resolve<T>(id: RegistrationId, required?: boolean): T {
+  resolve<T>(id: RegistrationId<T>, required?: boolean): T {
     const context = this.createResolutionContext();
     return context.resolve(id, required);
   }

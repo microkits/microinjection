@@ -62,7 +62,7 @@ export class ResolutionContext {
    * not found. If false, it will return undefined.
    * @returns The resolved instance of the registration.
    */
-  resolve<T>(id: RegistrationId, required?: boolean): T {
+  resolve<T>(id: RegistrationId<T>, required?: boolean): T {
     const registration = this.container.get<T>(id);
 
     if (registration?.isReady()) {
