@@ -1,4 +1,3 @@
-
 import { Scope } from "../types";
 import { Registry } from "./Registry";
 import { Registration } from "./Registration";
@@ -31,7 +30,6 @@ export class Container {
    * @param {RegistrationId} id - The id of the registration to check for.
    * @returns A boolean value.
    */
-
   has(id: RegistrationId): boolean {
     return this.registry.has(id);
   }
