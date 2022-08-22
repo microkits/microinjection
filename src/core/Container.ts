@@ -91,8 +91,15 @@ export class Container {
    * It takes an array of modules, and for each module, it calls the configure function
    * @param modules - [AbstractModule, ...AbstractModule[]]
    */
-  addModule(...modules: [AbstractModule, ...AbstractModule[]]): Container {
-    modules.forEach(module => module.configure(this));
+  async addModule(...modules: [AbstractModule, ...AbstractModule[]]): Promise<Container> {
+    const promises = modules.map(module =>
+      new Promise(resolve =>
+        resolve(module.configure(this))
+      )
+    )
+
+    await Promise.all(promises)
+
     return this
   }
 
