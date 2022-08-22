@@ -10,11 +10,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
   ],
   rules: {
-    "@typescript-eslint/no-empty-interface": [
-      "error",
-      {
-        "allowSingleExtends": true
-      }
-    ]
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 };
