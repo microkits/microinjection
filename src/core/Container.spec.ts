@@ -295,7 +295,7 @@ describe("Container", () => {
     expect(resolved1).toBe(resolved2);
   });
 
-  it("should use the same instance during the same resolution chain", () => {
+  it("should use the same instance during the same resolution chain when using context scope", () => {
     const container = new Container();
 
     class X { }
@@ -342,7 +342,32 @@ describe("Container", () => {
     const a = container.resolve<A>("A");
 
     expect(a.b.x).toBe(a.c.x);
-  })
+  });
+
+  it("should not use the same instance when using a transient scoped property", () => {
+    const container = new Container();
+
+    class A { }
+    class B {
+      readonly a: A;
+    }
+
+    container.register("A").asClass(A).inTransientScope();
+
+    container.register("B").asClass(B, {
+      properties: [{
+        name: "a",
+        inject: "A"
+      }]
+    });
+
+    const b1 = container.resolve<B>("B");
+    const b2 = container.resolve<B>("B");
+
+    expect(b1).toBeDefined();
+    expect(b2).toBeDefined();
+    expect(b1.a).not.toBe(b2.a);
+  });
 
   it("should resolve circular singleton scoped dependencies", () => {
     const container = new Container();

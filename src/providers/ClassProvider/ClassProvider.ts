@@ -37,18 +37,20 @@ export class ClassProvider<T> extends AbstractProvider<T> {
     const instance = Reflect.construct(this.target, params);
 
     this.properties?.forEach((property) => {
+      let cachedValue = property.value;
+
       Reflect.defineProperty(instance, property.name, {
         enumerable: true,
         configurable: true,
         get: () => {
-          if (property.value == null) {
-            property.value = context.resolve(
+          if (cachedValue == null) {
+            cachedValue = context.resolve(
               property.inject,
               property.required
             )
           }
 
-          return property.value
+          return cachedValue
         }
       });
     });
