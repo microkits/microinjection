@@ -1,5 +1,5 @@
-import { AlreadyRegisteredError } from "../errors/AlreadyRegisteredError";
-import { NotRegisteredError } from "../errors/NotRegisteredError";
+
+import { AlreadyRegisteredError, NotRegisteredError } from "../errors";
 import { Scope } from "../types";
 import { Container } from "./Container";
 
@@ -165,6 +165,21 @@ describe("Container", () => {
     expect(resolved).toBeInstanceOf(Test);
   });
 
+  it("should register and resolve a custom provider", () => {
+    const container = new Container();
+
+    container.register("custom").asProvider({
+      resolve() {
+        return 123
+      }
+    });
+
+    const resolved = container.resolve("custom");
+
+    expect(resolved).toBeDefined();
+    expect(resolved).toBe(123);
+  })
+
   it("should resolve to factory result each time resolve is called", () => {
     const mock = jest.fn();
     const container = new Container();
@@ -220,7 +235,7 @@ describe("Container", () => {
   it("should fail to register a dependency with a name already used", () => {
     const container = new Container();
 
-    container.register("A");
+    container.register("A").asValue("");
 
     expect(() => {
       container.register("A");
@@ -251,11 +266,12 @@ describe("Container", () => {
       constructor(public name: string) { }
     }
 
-    const registration = container
+    container
       .register("test")
       .asClass(Test)
-      .inSingletonScope()
-      .get();
+      .inSingletonScope();
+
+    const registration = container.get("test");
 
     expect(registration).toBeDefined();
     expect(registration.scope).toBe(Scope.SINGLETON);
