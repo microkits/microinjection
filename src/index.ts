@@ -2,6 +2,7 @@ export {
   AbstractModule,
   Container,
   ResolutionContext,
+  RegistrationId
 } from "./core";
 
 export {
@@ -10,5 +11,7 @@ export {
   FactoryProvider,
   ValueProvider
 } from "./providers"
+
+export { Scope } from "./types";
 
 export { Microinjection } from "./Microinjection";
