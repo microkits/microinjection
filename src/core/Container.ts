@@ -1,4 +1,4 @@
-import { Scope } from "../types";
+import { ConcreteClass, Scope } from "../types";
 import { Registry } from "./Registry";
 import { Registration } from "./Registration";
 import { RegistrationId } from "./Registration.types";
@@ -8,6 +8,7 @@ import { NotRegisteredError } from "../errors/NotRegisteredError";
 import { AbstractModule } from "./AbstractModule";
 import { RegistrationBuilder } from "../builder/RegistrationBuilder";
 import { AsSyntax } from "../builder/syntax/AsSyntax";
+import { ClassProviderOptions } from "../providers/ClassProvider/ClassProvider.types";
 
 export class Container {
   readonly parent?: Container;
@@ -116,6 +117,17 @@ export class Container {
   resolve<T>(id: RegistrationId<T>, required?: boolean): T {
     const context = this.createResolutionContext();
     return context.resolve(id, required);
+  }
+
+  /**
+   * It creates a new instance of the given class, and returns it
+   * @param target - The class to instantiate.
+   * @param {ClassProviderOptions} [options] - {
+   * @returns A new instance of the target class.
+   */
+  instantiate<T>(target: ConcreteClass<T>, options?: ClassProviderOptions) {
+    const context = this.createResolutionContext();
+    return context.instantiate(target, options);
   }
 
   /**

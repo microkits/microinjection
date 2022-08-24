@@ -1,6 +1,7 @@
-
 import { NotRegisteredError } from "../errors/NotRegisteredError";
-import { Scope } from "../types";
+import { ClassProvider } from "../providers";
+import { ClassProviderOptions } from "../providers/ClassProvider/ClassProvider.types";
+import { ConcreteClass, Scope } from "../types";
 import { Container } from "./Container";
 import { RegistrationId } from "./Registration.types";
 
@@ -42,7 +43,6 @@ export class ResolutionContext {
    * @param {RegistrationId} id - The registration id of the instance.
    * @param {unknown} instance - The value that we want to register.
    */
-
   private saveInstance(id: RegistrationId, instance: unknown) {
     this.cache.set(id, instance);
   }
@@ -53,6 +53,17 @@ export class ResolutionContext {
    */
   createChildContext(): ResolutionContext {
     return new ResolutionContext(this.container, this);
+  }
+
+  /**
+   * It creates a new instance of the given class, and returns it
+   * @param target - The class to instantiate.
+   * @param {ClassProviderOptions} [options] - {
+   * @returns A new instance of the target class.
+   */
+  instantiate<T>(target: ConcreteClass<T>, options?: ClassProviderOptions) {
+    const provider = new ClassProvider(target, options);
+    return provider.resolve(this);
   }
 
   /**
