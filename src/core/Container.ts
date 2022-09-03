@@ -94,9 +94,7 @@ export class Container {
    */
   async addModule(...modules: [AbstractModule, ...AbstractModule[]]): Promise<Container> {
     const promises = modules.map(module =>
-      new Promise(resolve =>
-        resolve(module.configure(this))
-      )
+      Promise.resolve(module.configure(this))
     )
 
     await Promise.all(promises)
