@@ -86,7 +86,7 @@ describe("Container", () => {
     expect(resolved.name).toBe(object.name);
   });
 
-  it("should register and resolve a class", function () {
+  it("should register and resolve a class", () => {
     const container = new Container();
 
     class Test { }
@@ -98,6 +98,24 @@ describe("Container", () => {
     expect(resolved).toBeDefined();
     expect(resolved).toBeInstanceOf(Test);
   });
+
+  it("should instantiate a class", () => {
+    class A { }
+    class B {
+      constructor(public a: A) { }
+    }
+
+    const container = new Container();
+
+    container.register(A).asClass(A)
+
+    const b = container.instantiate(B, {
+      dependencies: [A]
+    });
+
+    expect(b).toBeDefined();
+    expect(b.a).toBeInstanceOf(A);
+  })
 
   test("should register and resolve anonymous classes", () => {
     const container = new Container();
@@ -509,6 +527,8 @@ describe("Container", () => {
       public prop = {
         defined: false
       };
+
+      constructor(public b: B) { }
     }
     container.register("A").asClass(A);
     container.register("B").asClass(B, {
@@ -518,6 +538,7 @@ describe("Container", () => {
     });
 
     container.register("C").asClass(C, {
+      dependencies: ["B"],
       properties: [{
         name: "a",
         inject: "A"
@@ -532,8 +553,8 @@ describe("Container", () => {
     expect(Object.getOwnPropertyNames(b)).toStrictEqual(["a", "name", "prop"]);
 
     expect(c).toBeInstanceOf(C);
-    expect(Object.keys(c)).toStrictEqual(["name", "prop", "a"]);
-    expect(Object.getOwnPropertyNames(c)).toStrictEqual(["name", "prop", "a"]);
+    expect(Object.keys(c)).toStrictEqual(["b", "name", "prop", "a"]);
+    expect(Object.getOwnPropertyNames(c)).toStrictEqual(["b", "name", "prop", "a"]);
   });
 
   it("should remove registered dependencies", () => {
