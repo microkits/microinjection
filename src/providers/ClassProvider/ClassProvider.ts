@@ -25,6 +25,12 @@ export class ClassProvider<T> extends AbstractProvider<T> {
     const params = [];
 
     this.dependencies?.forEach((dependency) => {
+      if (typeof dependency !== "object") {
+        dependency = {
+          inject: dependency
+        }
+      }
+
       if (dependency.value == null) {
         dependency.value = context.resolve(
           dependency.inject,
@@ -39,7 +45,7 @@ export class ClassProvider<T> extends AbstractProvider<T> {
     this.properties?.forEach((property) => {
       let cachedValue = property.value;
 
-      Reflect.defineProperty(instance, property.name, {
+      Object.defineProperty(instance, property.name, {
         enumerable: true,
         configurable: true,
         get: () => {

@@ -1,6 +1,6 @@
 import { RegistrationId } from "../../core/Registration.types";
 
-export interface ClassDependency {
+export type ClassDependency = RegistrationId | {
   inject: RegistrationId;
   required?: boolean;
   value?: unknown;
