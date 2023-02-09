@@ -1,6 +1,6 @@
 {
   "name": "@microkits/microinjection",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "An inversion of control container for build better Node.js applications.",
   "author": {
     "name": "Guilherme Covre Dalleprane",
