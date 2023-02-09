@@ -1,4 +1,5 @@
 import { ResolutionContext } from "../../core/ResolutionContext";
+import { ValueOrRegistrationIdRequiredError } from "../../errors/ValueOrRegistrationIdRequiredError";
 import { ConcreteClass } from "../../types";
 import { AbstractProvider } from "../AbstractProvider";
 import { ClassDependency, ClassProperty, ClassProviderOptions } from "./ClassProvider.types";
@@ -32,6 +33,10 @@ export class ClassProvider<T> extends AbstractProvider<T> {
       }
 
       if (dependency.value == null) {
+        if (dependency.inject == null) {
+          throw new ValueOrRegistrationIdRequiredError(this.target.name);
+        }
+
         dependency.value = context.resolve(
           dependency.inject,
           dependency.required

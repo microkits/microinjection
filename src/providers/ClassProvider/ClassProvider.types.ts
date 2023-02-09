@@ -1,7 +1,7 @@
 import { RegistrationId } from "../../core/Registration.types";
 
 export type ClassDependency = RegistrationId | {
-  inject: RegistrationId;
+  inject?: RegistrationId;
   required?: boolean;
   value?: unknown;
 }
